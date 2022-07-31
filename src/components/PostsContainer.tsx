@@ -2,7 +2,7 @@ import React from 'react'
 
 function PostsContainer() {
   return (
-    <div>PostsContainer</div>
+    <section>Uploaded posts go here!</section>
   )
 }
 
