@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const postController = {}
 
 postController.validateFormData = (req, res, next) => {
@@ -10,8 +12,20 @@ postController.validateFormData = (req, res, next) => {
   return next();
 }
 
-postController.sendFakeRequest = (req, res, next) => {
-  
+postController.sendFakeRequest = async (req, res, next) => {
+  const fakeCatcher = async () => {
+    try {
+      await axios.post('/https://imagehasbeenverified.example.endpoint', {
+        image: req.file,
+        comment: req.body.comment
+      })
+      return true;
+    } catch (error) {
+      return true;
+    }
+  }
+  const result = await fakeCatcher()
+  return next();
 }
 
 module.exports = postController;
