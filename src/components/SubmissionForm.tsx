@@ -47,11 +47,24 @@ function SubmissionForm() {
     }
     const target: any = e.target;
     const imageFile = target.elements.image.files[0];
+    if (!(imageFile.type === 'image/jpeg' || imageFile.type === 'image/png')){
+      alert("Image must be in JPEG or PNG file format.")
+      return;
+    }
     const postComment = target.elements.comment.value;
 
     const data = new FormData()
     data.append('image', imageFile)
     data.append('comment', postComment)
+
+    const fetchOptions = {
+      method: 'POST',
+      enctype: 'multipart/form-data',
+      body: data
+    }
+
+    const response = await fetch('http://localhost:3001/upload', fetchOptions).then(response => response.json())
+    console.log(response);
 
     // dispatch new comment to Redux store
     dispatch(addPost({imgURI: image, comment: comment}))
@@ -59,13 +72,6 @@ function SubmissionForm() {
     // reset useState hooks
     setImage(defaultImageURL);
     setComment('');
-
-    // const fetchOptions = {
-    //   method: 'POST',
-    //   body: data
-    // }
-
-    // const response = await fetch('/upload', fetchOptions)
   }
 
   return (
