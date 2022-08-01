@@ -39,6 +39,10 @@ function SubmissionForm() {
   // sends POST request with image file and comment to server
   async function handleFormSubmit(e: SyntheticEvent){
     e.preventDefault();
+    if (image === defaultImageURL || comment === '') {
+      alert("Image and comment are requried to post.");
+      return;
+    }
     const target: any = e.target;
     const imageFile = target.elements.image.files[0];
     const postComment = target.elements.comment.value;
@@ -48,6 +52,9 @@ function SubmissionForm() {
     data.append('comment', postComment)
 
     dispatch(addPost({imgURI: image, comment: comment}))
+
+    setImage(defaultImageURL);
+    setComment('');
     // const fetchOptions = {
     //   method: 'POST',
     //   body: data
