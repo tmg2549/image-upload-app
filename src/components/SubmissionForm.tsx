@@ -1,12 +1,16 @@
 import React, {useState, SyntheticEvent} from 'react'
-import Button, {} from '@mui/material/Button'
+import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@mui/material/Input';
+import { useDispatch } from 'react-redux'
+import { addPost } from '../slices/postSlice'
 
 function SubmissionForm() {
   // state for image preview
   const defaultImageURL = "https://protkd.com/wp-content/uploads/2017/04/default-image.jpg";
   const [image, setImage] = useState<string>(defaultImageURL);
+  const [comment, setComment] = useState<string>('');
+  const dispatch = useDispatch();
 
   // changes preview image to uploaded image
   function onFileUpload(e: SyntheticEvent){
@@ -26,17 +30,24 @@ function SubmissionForm() {
       setImage(defaultImageURL);
     }
   }
+
+  function handleCommentChange(e: SyntheticEvent){
+    const target: any = e.target;
+    setComment(target.value);
+  }
+
   // sends POST request with image file and comment to server
   async function handleFormSubmit(e: SyntheticEvent){
     e.preventDefault();
     const target: any = e.target;
     const imageFile = target.elements.image.files[0];
-    const comment = target.elements.comment;
+    const postComment = target.elements.comment.value;
 
     const data = new FormData()
     data.append('image', imageFile)
-    data.append('comment', comment)
+    data.append('comment', postComment)
 
+    dispatch(addPost({imgURI: image, comment: comment}))
     // const fetchOptions = {
     //   method: 'POST',
     //   body: data
@@ -49,7 +60,7 @@ function SubmissionForm() {
     <form onSubmit={handleFormSubmit}>
       <Input name="image" type="file" onChange={onFileUpload}/>
       <img src={image} alt="Preview for post"></img>
-      <Input name="comment" placeholder="Enter comment here..."></Input>
+      <Input name="comment" placeholder="Enter comment here..." value={comment} onChange={handleCommentChange}></Input>
       <Button type="submit" variant="contained" endIcon={<SendIcon />}>Submit post</Button>
     </form>
   )
