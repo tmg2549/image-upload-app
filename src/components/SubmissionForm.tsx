@@ -59,7 +59,7 @@ function SubmissionForm() {
     // reset useState hooks
     setImage(defaultImageURL);
     setComment('');
-    
+
     // const fetchOptions = {
     //   method: 'POST',
     //   body: data
