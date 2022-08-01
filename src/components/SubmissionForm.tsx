@@ -9,7 +9,9 @@ function SubmissionForm() {
   // state for image preview
   const defaultImageURL = "https://protkd.com/wp-content/uploads/2017/04/default-image.jpg";
   const [image, setImage] = useState<string>(defaultImageURL);
+  // keep track of comment input field
   const [comment, setComment] = useState<string>('');
+  // enables dispatch to Redux store
   const dispatch = useDispatch();
 
   // changes preview image to uploaded image
@@ -51,10 +53,13 @@ function SubmissionForm() {
     data.append('image', imageFile)
     data.append('comment', postComment)
 
+    // dispatch new comment to Redux store
     dispatch(addPost({imgURI: image, comment: comment}))
 
+    // reset useState hooks
     setImage(defaultImageURL);
     setComment('');
+    
     // const fetchOptions = {
     //   method: 'POST',
     //   body: data
