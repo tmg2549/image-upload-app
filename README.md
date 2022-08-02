@@ -40,4 +40,14 @@ npm run server
 
 Server runs on port 3001 on local machine.
 
-Client and server are set up for hot module reloading if any edits are made.
+Client and server are set up for hot module reloading if any edits are made.\\
+
+## Wrap Up
+
+If I had more time, I would focus on the following:
+
+- Add TypeScript on the server-side code
+- Build out unit testing suite on client-side and server-side
+- Build out CSS and Meterial UI styling
+- Set up project for both production and development mode
+- Run cybersecurity and accessibility tests
