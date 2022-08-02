@@ -4,6 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Input from '@mui/material/Input';
 import { useDispatch } from 'react-redux'
 import { addPost } from '../slices/postSlice'
+import Box from '@mui/material/Box';
 
 function SubmissionForm() {
   // state for image preview
@@ -63,8 +64,13 @@ function SubmissionForm() {
       body: data
     }
 
-    const response = await fetch('http://localhost:3001/upload', fetchOptions).then(response => response.json())
-    console.log(response);
+    try {
+      const response = await fetch('http://localhost:3001/upload', fetchOptions).then(response => response.json())
+      console.log(response);
+    } catch (error) {
+      alert('Make sure to start the server before submitting a post.');
+      return;
+    }
 
     // dispatch new comment to Redux store
     dispatch(addPost({imgURI: image, comment: comment}))
@@ -72,14 +78,17 @@ function SubmissionForm() {
     // reset useState hooks
     setImage(defaultImageURL);
     setComment('');
+
   }
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <Input name="image" type="file" onChange={onFileUpload}/>
-      <img src={image} alt="Preview for post"></img>
-      <Input name="comment" placeholder="Enter comment here..." value={comment} onChange={handleCommentChange}></Input>
-      <Button type="submit" variant="contained" endIcon={<SendIcon />}>Submit post</Button>
+      <img src={image} alt="Preview for post" width="100%"></img>
+      <Box sx={{mt: 2, display: 'flex', flexDirection: 'column', gap: 2}}>
+        <Input name="image" type="file" onChange={onFileUpload}/>
+        <Input name="comment" placeholder="Enter comment here..." value={comment} onChange={handleCommentChange}></Input>
+        <Button type="submit" variant="contained" endIcon={<SendIcon />}>Submit post</Button>
+      </Box>
     </form>
   )
 }
