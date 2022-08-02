@@ -13,6 +13,7 @@ postController.validateFormData = (req, res, next) => {
 }
 
 postController.sendFakeRequest = async (req, res, next) => {
+  // Since API is fake, fakeCatcher is just a wrapper to avoid unnecessary error handling
   const fakeCatcher = async () => {
     try {
       await axios.post('/https://imagehasbeenverified.example.endpoint', {

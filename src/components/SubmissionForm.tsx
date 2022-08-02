@@ -15,7 +15,7 @@ function SubmissionForm() {
   // enables dispatch to Redux store
   const dispatch = useDispatch();
 
-  // changes preview image to uploaded image
+  // changes preview image to uploaded image by converting to base64
   function onFileUpload(e: SyntheticEvent){
     const target: any = e.target;
     const file = target.files[0];
@@ -75,7 +75,7 @@ function SubmissionForm() {
     // dispatch new comment to Redux store
     dispatch(addPost({imgURI: image, comment: comment}))
 
-    // reset useState hooks
+    // reset useState hooks and input values
     setImage(defaultImageURL);
     setComment('');
     target.elements.image.value = null;

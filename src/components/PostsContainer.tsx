@@ -7,6 +7,7 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Card from '@mui/material/Card'
 
 function PostsContainer() {
+  // Hook Redux store to component and create image gallery components
   const postsList = useSelector((state: RootState) => state.posts)
   const postsMap = postsList.map((post, index) => (
     <ImageListItem key={index}>
@@ -14,6 +15,7 @@ function PostsContainer() {
       <ImageListItemBar position="below" title={post.comment} />
     </ImageListItem>
   ))
+
   return (
     <section>
       <Card variant="outlined" sx={{mx: 16, mb: 4, p: 4, maxWidth: 'md', borderRadius: 4}}>
