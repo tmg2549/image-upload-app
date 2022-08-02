@@ -78,7 +78,7 @@ function SubmissionForm() {
     // reset useState hooks
     setImage(defaultImageURL);
     setComment('');
-
+    target.elements.image.value = null;
   }
 
   return (
